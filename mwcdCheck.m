@@ -1,10 +1,12 @@
-### The function mwcdCheck() computes the MWCD estimator for the given dataset.
+%%% The function mwcdCheck() computes the MWCD estimator for the given dataset.
+%%% The default weight function is linear decreasing function
 
-function [T,CM] = mwcd(data)
+function [T,CM] = mwcdCheck(data)
 [N, dim] = size(data);
 data = data';
+
+%%% you can set your own weight function
 weight = ones(1, N) - ((1:N)-1)/N;
-%weight = ones(1, N);
 sumWeight = sum(weight);
 theBestC = 0;
 theBestT = 0;

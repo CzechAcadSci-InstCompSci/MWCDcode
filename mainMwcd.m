@@ -1,42 +1,43 @@
-### Computation of the minimum weighted covariance determinant estimator (MWCD).
-### This is the main file. 
-### The input data file has to fulfil:
-### - format *.txt
-### - individual observations in rows
-### - values separated by spaces
-### - the first column corresponds to the index of the observation (i=1,...,n)
-### - e.g. 2 5 5 5 in the input file corresponds to the second observation equal to (5,5,5) 
-### - we assume the data matrix to be regular
+%%% Computation of the minimum weighted covariance determinant estimator (MWCD).
+%%% This is the main file. 
+%%% The input data file has to fulfil:
+%%% - format *.txt
+%%% - individual observations in rows
+%%% - values separated by spaces
+%%% - the first column corresponds to the index of the observation (i=1,...,n)
+%%% - e.g. 2 5 5 5 in the input file corresponds to the second observation equal to (5,5,5) 
+%%% - we assume the data matrix to be regular
 
 clear all;
 
-% canContinue = false;
-% while(~canContinue) 
-%     try
-%         inputData = input('Please enter the name of the data file: ','s');
-%         data = load(inputData);
-%     catch
-%         'Error in reading the data file, please try again.'
-%         continue;
-%     end
-%     [N, dim] = size(data);
-%     
-%     if(prod(svd(data)) ~= 0)
-%         canContinue = true;
-%     else
-%         'The requirement of regularity of the data matrix is violated!!!'
-%     end
-% end
+canContinue = false;
+while(~canContinue) 
+    try
+        inputData = input('Please enter the name of the data file: ','s');
+        data = load(inputData);
+    catch
+        'Error in reading the data file, please try again.'
+        continue;
+    end
+    [N, dim] = size(data);
+    
+    if(prod(svd(data)) ~= 0)
+        canContinue = true;
+    else
+        'The requirement of regularity of the data matrix is violated!!!'
+    end
+end
 curX = 2;
 curY = 3;
-data = load('dataHBK.txt');
-%data = data*[-2 1; 1 -1];
-data = data(:, 2:5);
-[T, C] = mwcd(data, 0);
+dim = dim-1;
+data = data(:, 2:dim);
+'T ... mean; C ... covarience matrix'
+[T, C] = mwcdCheck(data)
+
 %(X-T)TC(X-T) = CONST
 CONST = 5;
 C = inv(C);
-[V,D] = eigs(C)
+[V,D] = eigs(C);
 
 Nfit = 100;
 fi = linspace(0, 2*pi, Nfit);
