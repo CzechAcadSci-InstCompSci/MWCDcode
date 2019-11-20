@@ -1,4 +1,4 @@
-# MWCD code
+# MWCD code version 1.0
 
 Computation of the minimum weighted covariance determinant (MWCD) estimator
 
